@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Facelet Title</title>
+
+	<link href="resources/styles.css" rel="stylesheet" type="text/css" />
+
+</h:head>
+<h:body>
+	<h3>New Candidate</h3>
+	<h:form>
+		<h:panelGrid columns="2" styleClass="form">
+			<h:outputLabel>ID</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.id}" />
+			<h:outputLabel>Skill Set</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.skillSet}" />
+			<h:outputLabel>Name</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.name}" />
+			<h:outputLabel>Email</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.email}" />
+			<h:outputLabel>Phone</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.phone}" />
+			<h:outputLabel>Gender</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.gender}" />
+			<h:outputLabel>Last Degree</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.lastDegree}" />
+			<h:outputLabel>Last Designation</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.lastDesig}" />
+			<h:outputLabel>Experience</h:outputLabel>
+			<h:inputText value="#{candidateController.candidate.expInYearMonth}" />
+		</h:panelGrid>
+		<p>
+			<h:commandButton actionListener="#{candidateController.create()}"
+				styleClass="buttons" value="Add New" />
+		</p>
+	</h:form>
+
+	<h:form id="view">
+
+		<h:outputLabel value="Search Skill " style="font-weight:bold" /> &nbsp;&nbsp;
+         <h:inputText value="#{candidateController.filter}" /> &nbsp; &nbsp;
+         <h:commandButton actionListener="#{candidateController.find()}"
+			styleClass="buttons" value="Search" />
+		<br />
+
+		<h:panelGrid>
+			<h:dataTable value="#{candidateController.list}" var="c"
+				styleClass="table" headerClass="table-header"
+				rowClasses="table-odd-row,table-even-row">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+					<h:outputText value="#{c.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Skills</f:facet>
+					<h:outputText value="#{c.skillSet}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Name</f:facet>
+					<h:outputText value="#{c.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Email</f:facet>
+					<h:outputText value="#{c.email}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Phone</f:facet>
+					<h:outputText value="#{c.phone}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Gender</f:facet>
+					<h:outputText value="#{c.gender}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Qualification</f:facet>
+					<h:outputText value="#{c.lastDegree}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Designation</f:facet>
+					<h:outputText value="#{c.lastDesig}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Experience</f:facet>
+					<h:outputText value="#{c.expInYearMonth}" />
+				</h:column>
+				<h:column>
+					<h:commandButton actionListener="#{candidateController.delete()}"
+						styleClass="buttons" value="Delete [ID: #{c.id}]" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
