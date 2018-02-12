@@ -21,7 +21,7 @@ public class CandidateFacade {
 	private final static String HOST = "mongodb";
 	private final static int PORT = 27017;
 
-	public final static String DATABASE = "cvbank";
+	public final static String DATABASE = "test";
 	public final static String COLLECTION = "biodata";
 
 	public MongoClient mongoClient() {
