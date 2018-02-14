@@ -18,7 +18,8 @@ import org.bson.Document;
 public class CandidateFacade {
 
 	private static final Logger LOGGER = Logger.getLogger(CandidateFacade.class.getName());
-	private final static String HOST = "localhost";
+	//private final static String HOST = "localhost";
+	private final static String HOST = "mongodb";
 	private final static int PORT = 27017;
 
 	public final static String DATABASE = "cvbank";
