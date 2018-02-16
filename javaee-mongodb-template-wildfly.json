@@ -2,14 +2,14 @@
    "kind": "Template",
    "apiVersion": "v1",
    "metadata": {
-      "name": "javaee-mongodb",
+      "name": "jeemongo-wildfly",
       "annotations": {
          "iconClass": "icon-jboss",
-         "description": "Application template for javaee-mongodb"
+         "description": "Application template for MLB Parks application on WildFly & MongoDB built using STI"
       }
    },
    "labels": {
-      "application": "javaee-mongodb",
+      "application": "jeemongo",
       "createdBy": "template-jeemongo-wildfly"
    },
    "parameters": [
@@ -41,7 +41,7 @@
       {
          "description": "Database name",
          "name": "MONGODB_DATABASE",
-         "value": "cvbook"
+         "value": "root"
       },
       {
          "description": "Disable data file preallocation.",
@@ -179,7 +179,7 @@
                      "from": {
                         "kind": "ImageStreamTag",
                         "namespace": "openshift",
-                        "name": "mongodb:2.6"
+                        "name": "mongodb:3.6"
                      }
                   }
                },

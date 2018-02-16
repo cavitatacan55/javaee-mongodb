@@ -3,10 +3,12 @@ package org.mano.example;
 import com.google.gson.Gson;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -22,19 +24,25 @@ public class CandidateFacade {
 	private final static String HOST = System.getenv("MONGODB_SERVICE_HOST");
 	//private final static String HOST = "mongodb";
 	//private final static int PORT = 27017;
-	private final static int PORT = Integer.valueOf(System.getenv("MONGODB_SERVICE_PORT"));
+	private final static int PORT = Integer.decode(System.getenv("MONGODB_SERVICE_PORT"));
 
 	//public final static String DATABASE = "cvbank";
 	public final static String DATABASE = System.getenv("MONGODB_DATABASE");
 	public final static String COLLECTION = "biodata";
+	private final static String MONGODB_USER = System.getenv("MONGODB_USER");
+	private final static String MONGODB_PASSWORD = System.getenv("MONGODB_PASSWORD");
 
 	public MongoClient mongoClient() {
-		return new MongoClient(new ServerAddress(HOST, PORT));
+		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+		return new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
+
 	}
 
 	public void create(Candidate c) {
+	MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+	
       MongoClient mongoClient = new
-         MongoClient(new ServerAddress(HOST, PORT));
+         MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
       MongoCollection<Document> collection =
          mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
       if  (c!=null) {
@@ -55,7 +63,10 @@ public class CandidateFacade {
    }
 
 	public void update(Candidate c) {
-		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT));
+	
+		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+
+		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
 		MongoCollection<Document> collection = mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
 		Document d = new Document();
 		d.append("id", c.getId()).append("skillSet", c.getSkillSet()).append("name", c.getName())
@@ -66,14 +77,19 @@ public class CandidateFacade {
 	}
 
 	public void delete(Candidate c) {
-		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT));
+		
+		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+
+		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
 		MongoCollection<Document> collection = mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
 		collection.deleteOne(new Document("id", c.getId()));
 	}
 
 	public List<Candidate> find(String filter) {
 		final List<Candidate> list = new ArrayList<>();
-		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT));
+		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+
+		MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT),Arrays.asList(credential) );
 		MongoCollection<Document> collection = mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
 		FindIterable<Document> iter;
 		if (filter == null || filter.trim().length() == 0) {
