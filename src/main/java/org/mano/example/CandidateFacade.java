@@ -19,10 +19,13 @@ public class CandidateFacade {
 
 	private static final Logger LOGGER = Logger.getLogger(CandidateFacade.class.getName());
 	//private final static String HOST = "localhost";
-	private final static String HOST = "mongodb";
-	private final static int PORT = 27017;
+	private final static String HOST = System.getenv("MONGODB_SERVICE_HOST");
+	//private final static String HOST = "mongodb";
+	//private final static int PORT = 27017;
+	private final static int PORT = Integer.valueOf(System.getenv("MONGODB_SERVICE_PORT"));
 
-	public final static String DATABASE = "cvbank";
+	//public final static String DATABASE = "cvbank";
+	public final static String DATABASE = System.getenv("MONGODB_DATABASE");
 	public final static String COLLECTION = "biodata";
 
 	public MongoClient mongoClient() {
