@@ -32,18 +32,32 @@ public class CandidateFacade {
 	private final static String MONGODB_USER = System.getenv("MONGODB_USER");
 	private final static String MONGODB_PASSWORD = System.getenv("MONGODB_PASSWORD");
 
+	@SuppressWarnings("deprecation")
 	public MongoClient mongoClient() {
 		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+		ServerAddress srvadr = new ServerAddress(HOST, PORT);
+		List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+		credentials.add(credential);
+		List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+		seeds.add(srvadr);
 		//return new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
-		return new MongoClient(HOST);
+		return new MongoClient(seeds, credentials);
 
 	}
 
 	public void create(Candidate c) {
-	MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
-	
+		
+		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
+		ServerAddress srvadr = new ServerAddress(HOST, PORT);
+		List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+		credentials.add(credential);
+		List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+		seeds.add(srvadr);
+		 MongoClient mongoClient = new MongoClient(seeds, credentials);
+		 
       //MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
-      MongoClient mongoClient = new MongoClient(HOST);
+     
+      
       MongoCollection<Document> collection =
          mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
       if  (c!=null) {
@@ -66,10 +80,12 @@ public class CandidateFacade {
 	public void update(Candidate c) {
 	
 		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
-
-		@SuppressWarnings("deprecation")
-		//MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT), Arrays.asList(credential));
-		MongoClient mongoClient = new MongoClient(HOST);
+		ServerAddress srvadr = new ServerAddress(HOST, PORT);
+		List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+		credentials.add(credential);
+		List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+		seeds.add(srvadr);
+		 MongoClient mongoClient = new MongoClient(seeds, credentials);
 		
 		MongoCollection<Document> collection = mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
 		Document d = new Document();
@@ -93,9 +109,12 @@ public class CandidateFacade {
 	public List<Candidate> find(String filter) {
 		final List<Candidate> list = new ArrayList<>();
 		MongoCredential credential = MongoCredential.createCredential(MONGODB_USER, DATABASE, MONGODB_PASSWORD.toCharArray());
-
-		//MongoClient mongoClient = new MongoClient(new ServerAddress(HOST, PORT),Arrays.asList(credential) );
-		MongoClient mongoClient = new MongoClient(HOST);
+		ServerAddress srvadr = new ServerAddress(HOST, PORT);
+		List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+		credentials.add(credential);
+		List<ServerAddress> seeds = new ArrayList<ServerAddress>();
+		seeds.add(srvadr);
+		 MongoClient mongoClient = new MongoClient(seeds, credentials);
 		MongoCollection<Document> collection = mongoClient.getDatabase(DATABASE).getCollection(COLLECTION);
 		FindIterable<Document> iter;
 		if (filter == null || filter.trim().length() == 0) {
