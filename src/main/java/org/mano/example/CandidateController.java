@@ -25,7 +25,7 @@ public class CandidateController implements Serializable {
 	}
 
 	@PostConstruct
-	private void init() {
+	public void init() {
 		find();
 	}
 

@@ -1,5 +1,4 @@
 package org.mano.example;
-
 public class Candidate {
 	private int id;
 	private String skillSet;
